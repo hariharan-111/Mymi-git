@@ -1,3 +1,5 @@
+package org.library;
+
 public enum UserType {
     ADMIN( "admin", 1),
     LIBRARIAN("librarian", 2),

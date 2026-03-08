@@ -1,0 +1,51 @@
+package org.library;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class LibrarySystem {
+    int userType;
+    String userName;
+
+    LibrarySystem(int userType, String userName) {
+        this.userType = userType;
+        this.userName = userName;
+    }
+
+    LibrarySystem() {
+    }
+
+    public static int serveUserType(){
+        UserType[] userTypes = UserType.values();
+        Scanner localRead = new Scanner(System.in);
+        for(UserType value: userTypes) {
+            System.out.println("To register as " + value.displayName.toUpperCase() + "press " + value.code);
+        }
+        int choice = localRead.nextInt();
+        localRead.close();
+        return choice;
+    }
+
+    static LibrarySystem getLibraryInstance(String userName) {
+        int userType = LibrarySystem.serveUserType();
+        return new LibrarySystem(userType, userName);
+    }
+
+    public boolean login() {
+        return true;
+    }
+
+    public boolean logout() {
+        return true;
+    }
+
+    public void Register() throws IOException {
+        RegisterFileHandler register = new RegisterFileHandler();
+        try {
+            register.writeUser(this);
+        } catch (IOException e) {
+            System.out.println(e);
+            throw e;
+        }
+    }
+}
