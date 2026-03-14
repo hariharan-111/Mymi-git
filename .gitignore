@@ -1,8 +1,15 @@
+### Gradle ###
+.gradle/
+build/
+app/build/
+
 ### IntelliJ IDEA ###
+.idea/
+*.iml
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-.kotlin
+
+### VS Code ###
+.vscode/
 
 ### Eclipse ###
 .apt_generated
@@ -13,8 +20,6 @@ out/
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
 ### NetBeans ###
 /nbproject/private/
@@ -23,8 +28,15 @@ bin/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
+### Compiled Java ###
+*.class
 
-### Mac OS ###
+### Logs ###
+*.log
+
+### OS Files ###
 .DS_Store
+Thumbs.db
+
+### Local runtime data ###
+app/data/

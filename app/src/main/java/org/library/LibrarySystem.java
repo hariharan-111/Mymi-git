@@ -4,12 +4,28 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class LibrarySystem {
-    int userType;
-    String userName;
+    private int userType;
+    private String userName;
 
     LibrarySystem(int userType, String userName) {
         this.userType = userType;
         this.userName = userName;
+    }
+
+    public int getUserType() {
+        return this.userType;
+    }
+
+    public void setUserType(int type) {
+        this.userType = type;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String name) {
+        this.userName = name;
     }
 
     LibrarySystem() {
