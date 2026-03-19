@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class App {
   static Scanner read;
-  LibrarySystem userThread;
 
   public static Scanner getRead(){
     if (read == null) {
@@ -14,7 +13,7 @@ public class App {
     return read;
   }
 
-  public void greeting() {
+public void greeting() {
     System.out.println("Welcome to the Console based Library System");
   }
 
@@ -54,12 +53,9 @@ public class App {
         break;
       }
       case 2 : {
-        String userName = read.nextLine();
-        boolean existingUser = LibrarySystem.checkUser();
-        if (existingUser) {
-          instance.greeting();
-        }
-        break;
+        this.userInstance = LibrarySystem.getLibraryInstance(userName);
+        userName.login();
+        userName.serveOptions();
       }
     }
   }

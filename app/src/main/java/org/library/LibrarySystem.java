@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class LibrarySystem {
   private int userType;
   private String userName;
+  public boolean loginStatus;
 
   LibrarySystem(int userType, String userName) {
     this.userType = userType;
@@ -49,31 +50,46 @@ public class LibrarySystem {
   }
 
   static LibrarySystem getLibraryInstance(String userName) {
-    int userType = LibrarySystem.serveUserType();
-    return new LibrarySystem(userType, userName);
+    try {
+      LibrarySystem existingUser = getUser(userName);
+      if (exsitingUser != null) {
+        return existingUser;
+      }
+    } catch (Exception e) {
+      int userType = serveUserType();
+      return new LibrarySystem(userType, userName);
+    }
   }
 
-  static boolean checkUser(int userId) {
+  static LibrarySystem getUser(String userName) throws Exception {
     List<LibrarySystem> userList= RegisterFileHandler.getUsers();
 
     if (userList.size() > 0) {
       for (LibrarySystem user : userList) {
-        if (user.userName.equals(userName)) {
-          return true;
+        if (user.userName.toLowerCase().equals(userName.toLowerCase)) {
+          return user;
         }
       }
 
     }
-
-    return false;
+    throw new Exception();
   }
 
   public boolean login() {
-    return true;
+    try {
+      if (getUser(this.userName) != null) {
+        this.loginStatus = true;
+        return true;
+      }
+    } 
+    catch(Exception e) {
+      System.out.println("User Not found.");
+      return false;
+    }
   }
 
-  public boolean logout() {
-    return true;
+  public void logout() {
+    this.loginStatus = false;
   }
 
   public void Register() throws IOException {
@@ -83,6 +99,33 @@ public class LibrarySystem {
     } catch (IOException e) {
       System.out.println(e);
       throw e;
+    }
+  }
+
+  public void serveOptions() {
+    Scanner localRead = new Scanner(System.in);
+    System.out.println("------------------Options------------------------");
+    System.out.println("-------------------------------------------------");
+    System.out.println("--------------------------------------------------");
+    LibraryOptions[] options = LibraryOptions.values();
+    for (LibraryOptions opt: options) {
+      System.out.println("To " +  opt.desc + "press " + opt.code);
+    }
+    int choice = Integer.parseInt(localRead.nextLine());
+    localRead.close();
+    System.out.println("--------------------------------------------------");
+    System.out.println("--------------------------------------------------");
+    System.out.println("--------------------------------------------------");
+
+    switch(choice) {
+      case 1: {
+        try {
+          Books.listBooks();
+        } catch (Exception e) {
+          System.out.println('Exception Occured', e);
+        }
+      }
+      break;
     }
   }
 }
