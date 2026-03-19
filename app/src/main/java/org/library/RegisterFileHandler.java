@@ -12,25 +12,37 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RegisterFileHandler {
-    private static final ObjectMapper mapper = new ObjectMapper();
+  private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static void writeUser(LibrarySystem userDetails) throws IOException {
+  public static void writeUser(LibrarySystem userDetails) throws IOException {
 
-        File dataDir = new File("data");
-        if (!dataDir.exists()) {
-            dataDir.mkdir();
-        }
-
-        File file = new File(dataDir, "users.json");
-
-        List<LibrarySystem> users = new ArrayList<>();
-
-        if (file.exists() && file.length() > 0) {
-            users = mapper.readValue(file, new TypeReference<List<LibrarySystem>>() {});
-        }
-
-        users.add(userDetails);
-
-        mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
+    File dataDir = new File("data");
+    if (!dataDir.exists()) {
+      dataDir.mkdir();
     }
+
+    File file = new File(dataDir, "users.json");
+
+    List<LibrarySystem> users = new ArrayList<>();
+
+    if (file.exists() && file.length() > 0) {
+      users = mapper.readValue(file, new TypeReference<List<LibrarySystem>>() {});
+    }
+
+    users.add(userDetails);
+
+    mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
+  }
+
+  public static List<LibrarySystem> getUsers() {
+    List<LibrarySystem> users = new ArrayList<>();
+
+    File file = new File("data/users.json");
+
+    if (file.exists() && file.length() > 0) {
+      users = users.mapper.readValue(file, new TypeReference<List<LibrarySystem>>() {});
+    }
+
+    return users;
+  }
 }

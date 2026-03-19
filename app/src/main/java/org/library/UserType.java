@@ -24,13 +24,4 @@ public enum UserType {
         throw new Exception();
     }
 
-    static UserType getInstance(int code) throws Exception{
-        UserType[] typeArr = values();
-        for (UserType userType: typeArr) {
-            if (userType.code == code) {
-                return userType;
-            }
-        }
-        throw new Exception();
-    }
 }

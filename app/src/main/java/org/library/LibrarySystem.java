@@ -4,64 +4,85 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class LibrarySystem {
-    private int userType;
-    private String userName;
+  private int userType;
+  private String userName;
 
-    LibrarySystem(int userType, String userName) {
-        this.userType = userType;
-        this.userName = userName;
+  LibrarySystem(int userType, String userName) {
+    this.userType = userType;
+    this.userName = userName;
+  }
+
+  public int getUserType() {
+    return this.userType;
+  }
+
+  public void setUserType(int type) {
+    this.userType = type;
+  }
+
+  public String getUserName() {
+    return this.userName;
+  }
+
+  public void setUserName(String name) {
+    this.userName = name;
+  }
+
+  LibrarySystem() {
+  }
+
+  public static int serveUserType(){
+    UserType[] userTypes = UserType.values();
+    Scanner localRead = new Scanner(System.in);
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("-------------------------------------------------------------");
+    for(UserType value: userTypes) {
+      System.out.println("To register as " + value.displayName.toUpperCase() + "press " + value.code);
     }
+    int choice = localRead.nextInt();
+    localRead.close();
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("-------------------------------------------------------------");
+    return choice;
+  }
 
-    public int getUserType() {
-        return this.userType;
-    }
+  static LibrarySystem getLibraryInstance(String userName) {
+    int userType = LibrarySystem.serveUserType();
+    return new LibrarySystem(userType, userName);
+  }
 
-    public void setUserType(int type) {
-        this.userType = type;
-    }
+  static boolean checkUser(int userId) {
+    List<LibrarySystem> userList= RegisterFileHandler.getUsers();
 
-    public String getUserName() {
-        return this.userName;
-    }
-
-    public void setUserName(String name) {
-        this.userName = name;
-    }
-
-    LibrarySystem() {
-    }
-
-    public static int serveUserType(){
-        UserType[] userTypes = UserType.values();
-        Scanner localRead = new Scanner(System.in);
-        for(UserType value: userTypes) {
-            System.out.println("To register as " + value.displayName.toUpperCase() + "press " + value.code);
+    if (userList.size() > 0) {
+      for (LibrarySystem user : userList) {
+        if (user.userName.equals(userName)) {
+          return true;
         }
-        int choice = localRead.nextInt();
-        localRead.close();
-        return choice;
+      }
+
     }
 
-    static LibrarySystem getLibraryInstance(String userName) {
-        int userType = LibrarySystem.serveUserType();
-        return new LibrarySystem(userType, userName);
-    }
+    return false;
+  }
 
-    public boolean login() {
-        return true;
-    }
+  public boolean login() {
+    return true;
+  }
 
-    public boolean logout() {
-        return true;
-    }
+  public boolean logout() {
+    return true;
+  }
 
-    public void Register() throws IOException {
-        RegisterFileHandler register = new RegisterFileHandler();
-        try {
-            register.writeUser(this);
-        } catch (IOException e) {
-            System.out.println(e);
-            throw e;
-        }
+  public void Register() throws IOException {
+    RegisterFileHandler register = new RegisterFileHandler();
+    try {
+      register.writeUser(this);
+    } catch (IOException e) {
+      System.out.println(e);
+      throw e;
     }
+  }
 }
